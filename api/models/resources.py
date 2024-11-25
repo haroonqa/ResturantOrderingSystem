@@ -12,3 +12,4 @@ class Resource(Base):
     amount = Column(Integer, index=True, nullable=False, server_default='0.0')
 
     recipes = relationship("Recipe", back_populates="resource")
+    
