@@ -6,7 +6,8 @@ from . import (
     resources,
     menu_items,
     ingredients,
-    ratings_reviews
+    ratings_reviews,
+    customer
 )
 from .junction_tables import menu_item_ingredients  # Correct file for the junction table
 from ..dependencies.database import engine  # Correct relative import
@@ -21,6 +22,6 @@ def index():
     menu_items.Base.metadata.create_all(engine)
     ingredients.Base.metadata.create_all(engine)
     ratings_reviews.Base.metadata.create_all(engine)
+    customer.Base.metadata.create_all(engine)
 
-    # Create the junction table explicitly
     menu_item_ingredients.create(engine, checkfirst=True)

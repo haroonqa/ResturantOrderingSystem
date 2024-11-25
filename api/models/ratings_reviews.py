@@ -12,3 +12,5 @@ class RatingsReviews(Base):
     review_text = Column(String, nullable=True)
 
     menu_item = relationship("MenuItem", back_populates="reviews")
+    customer = relationship("Customer", back_populates="reviews")  # Link back to Customer
+
