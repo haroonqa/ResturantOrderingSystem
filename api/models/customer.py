@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
 
@@ -12,6 +13,9 @@ class Customer(Base):
     phone_number = Column(String(100), index=True, nullable=False)
     address = Column(String(100), index=True, nullable=False)
     password = Column(String(100), index=True, nullable=False)
+
+    reviews = relationship("RatingsReviews", back_populates="customer")  
+
 
     def __init__(self, name, email, phone_number, address, password=None):
         self.name = name
