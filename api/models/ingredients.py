@@ -6,9 +6,9 @@ class Ingredient(Base):
     __tablename__ = "ingredients"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    name = Column(String, nullable=False)
+    name = Column(String(100), nullable=False)
     quantity = Column(Integer, nullable=False)
-    unit = Column(String, nullable=False)
+    unit = Column(String(100), nullable=False)
 
     menu_items = relationship("MenuItem", secondary="menu_item_ingredients", back_populates="ingredients")
 
