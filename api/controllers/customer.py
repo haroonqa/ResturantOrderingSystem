@@ -2,12 +2,18 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException, status, Response, Depends
 from ..models import customer as model
 from sqlalchemy.exc import SQLAlchemyError
+from datetime import datetime
+from ..schemas import customer
+
 
 def create(db: Session, request):
     new_customer = model.Customer(
         name=request.name,
         email=request.email,
-        phone=request.phone
+        phone_number=request.phone_number,
+        address=request.address,
+        password=request.password
+
     )
 
     try:
@@ -20,6 +26,17 @@ def create(db: Session, request):
 
     return new_customer
 
+# this function is being used for guest creation
+def create_guest(db: Session, guest_create: customer.GuestCreate):
+    guest_customer = model.Customer(
+        name="Guest",  # Default name for guests
+        email=guest_create.email,
+        phone_number=guest_create.phone_number,
+    )
+    db.add(guest_customer)
+    db.commit()
+    db.refresh(guest_customer)
+    return guest_customer
 
 def read_all(db: Session):
     try:
