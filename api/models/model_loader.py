@@ -1,3 +1,4 @@
+
 from . import (
     orders,
     order_details,
@@ -7,10 +8,12 @@ from . import (
     menu_items,
     ingredients,
     ratings_reviews,
-    customer
+    customer,
+    transactions,
+    
 )
 from .junction_tables import menu_item_ingredients  # Correct file for the junction table
-from ..dependencies.database import engine  # Correct relative import
+from ..dependencies.database import engine
 
 def index():
     # Create tables for all models
@@ -23,5 +26,5 @@ def index():
     ingredients.Base.metadata.create_all(engine)
     ratings_reviews.Base.metadata.create_all(engine)
     customer.Base.metadata.create_all(engine)
-
     menu_item_ingredients.create(engine, checkfirst=True)
+    transactions.Base.metadata.create_all(engine)

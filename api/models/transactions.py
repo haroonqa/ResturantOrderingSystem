@@ -3,12 +3,12 @@ from sqlalchemy.orm import relationship
 from datetime import datetime
 from ..dependencies.database import Base
 
-class OrderDetail(Base):
-    __tablename__ = "order_details"
 
+class Transaction(Base):
+    __tablename__ = "transactions"
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_id = Column(Integer, ForeignKey("orders.id"))
-    sandwich_id = Column(Integer, ForeignKey("sandwiches.id"))
-    amount = Column(Integer, index=True, nullable=False)
-    sandwich = relationship("Sandwich", back_populates="order_details")
-    order = relationship("Order", back_populates="order_details")
+    price = Column(DECIMAL(4, 2), nullable=False, server_default='0.0')
+    payment_method = Column(String(4), nullable=False)
+
+    order = relationship("Order", back_populates="transactions")
