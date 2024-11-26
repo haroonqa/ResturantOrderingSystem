@@ -132,6 +132,9 @@ venv.bak/
 .spyderproject
 .spyproject
 
+#config
+
+
 # Rope project settings
 .ropeproject
 
@@ -160,3 +163,4 @@ cython_debug/
 .idea/
 
 .pytest_cache
+api/dependencies/config.py
