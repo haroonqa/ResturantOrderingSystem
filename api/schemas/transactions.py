@@ -24,4 +24,4 @@ class Transaction(TransactionBase):
     order: Optional[Order] = None  # Include the related Order, if applicable
 
     class Config:
-        orm_mode = True  # Use orm_mode for SQLAlchemy integration
+        from_attributes = True  # Use orm_mode for SQLAlchemy integration

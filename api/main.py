@@ -21,6 +21,9 @@ app.add_middleware(
 model_loader.index()
 indexRoute.load_routes(app)
 
+@app.get("/")
+async def root():
+    return {"message": "Welcome to the Restaurant Ordering System!"}
 
 if __name__ == "__main__":
     uvicorn.run(app, host=conf.app_host, port=conf.app_port)
