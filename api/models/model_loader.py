@@ -10,6 +10,8 @@ from . import (
     ratings_reviews,
     customer,
     transactions,
+    menu_item_ingredients
+
     
 )
 from .junction_tables import menu_item_ingredients  # Correct file for the junction table
