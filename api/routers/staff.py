@@ -13,7 +13,7 @@ router = APIRouter(
 def create_staff(staff: schema.StaffCreate, db: Session = Depends(get_db)):
     return controller.create_staff(db=db, staff=staff)
 
-@router.get("/", response_model=list[schema.Staff])
-def read_all_staff(db: Session = Depends(get_db)):
-    return controller.read_all(db)
+# @router.get("/", response_model=list[schema.Staff])
+# def read_all_staff(db: Session = Depends(get_db)):
+#     return controller.read_all(db)
 
