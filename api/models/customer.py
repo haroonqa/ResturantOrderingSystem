@@ -1,4 +1,5 @@
 from sqlalchemy import Column, ForeignKey, Integer, String, DECIMAL, DATETIME
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
@@ -16,13 +17,15 @@ class Customer(Base):
     address = Column(String(100), index=True, nullable=True)
     password = Column(String(100), index=True, nullable=True)
 
-    # def __init__(self, name, email, phone_number, address, password=None):
-    #     self.name = name
-    #     self.email = email
-    #     self.phone_number = phone_number
-    #     self.address = address
-    #     self.password = password
+    reviews = relationship("RatingsReviews", back_populates="customer")  
 
+
+    def __init__(self, name, email, phone_number, address, password=None):
+        self.name = name
+        self.email = email
+        self.phone_number = phone_number
+        self.address = address
+        self.password = password
 
 
     def createAccount(session,name, email, phone_number, address, password=None):
