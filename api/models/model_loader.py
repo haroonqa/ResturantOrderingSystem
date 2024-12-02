@@ -9,6 +9,7 @@ from . import (
     ingredients,
     ratings_reviews,
     customer,
+    staff,
     transactions,
     menu_item_ingredients
 
@@ -30,3 +31,5 @@ def index():
     customer.Base.metadata.create_all(engine)
     menu_item_ingredients.create(engine, checkfirst=True)
     transactions.Base.metadata.create_all(engine)
+    staff.Base.metadata.create_all(engine)
+
