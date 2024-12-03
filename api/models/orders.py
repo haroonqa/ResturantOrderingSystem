@@ -13,3 +13,6 @@ class Order(Base):
     order_completed = Column(Boolean, default=False)
     customer_id = Column(Integer, ForeignKey("customers.id"))
     order_details = relationship("OrderDetail", back_populates="order")
+
+    promotion_id = Column(Integer, ForeignKey("promotion.id"), nullable=True)
+    promotion = relationship("Promotion", back_populates="orders", lazy="selectin")

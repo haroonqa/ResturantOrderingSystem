@@ -1,6 +1,10 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship, validates
 from ..dependencies.database import Base
+from fastapi import APIRouter, Depends
+from sqlalchemy.orm import Session
+from ..dependencies.database import get_db
+from ..schemas.ingredients import IngredientCreate, IngredientResponse
 
 class Ingredient(Base):
     __tablename__ = "ingredients"

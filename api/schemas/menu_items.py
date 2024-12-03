@@ -1,15 +1,18 @@
 from pydantic import BaseModel
+from typing import Optional
+
 
 class MenuItemBase(BaseModel):
     name: str
     price: float
-    calories: int
-    category: str
+    description: Optional[str] = None
+
 
 class MenuItemCreate(MenuItemBase):
-    pass
+    pass  # Additional fields for creation can go here if needed
 
-class MenuItemResponse(MenuItemBase):
+
+class MenuItem(MenuItemBase):
     id: int
 
     class Config:

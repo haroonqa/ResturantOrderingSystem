@@ -10,15 +10,14 @@ from . import (
     ratings_reviews,
     customer,
     transactions,
-    menu_item_ingredients
-
-    
+    menu_item_ingredients,
+    promotion,
 )
 from .junction_tables import menu_item_ingredients  # Correct file for the junction table
 from ..dependencies.database import engine
 
+
 def index():
-    # Create tables for all models
     orders.Base.metadata.create_all(engine)
     order_details.Base.metadata.create_all(engine)
     recipes.Base.metadata.create_all(engine)
@@ -30,3 +29,5 @@ def index():
     customer.Base.metadata.create_all(engine)
     menu_item_ingredients.create(engine, checkfirst=True)
     transactions.Base.metadata.create_all(engine)
+    promotion.Base.metadata.create_all(engine)
+
