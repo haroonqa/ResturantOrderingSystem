@@ -11,4 +11,4 @@ class Transaction(Base):
     price = Column(DECIMAL(4, 2), nullable=False, server_default='0.0')
     payment_method = Column(String(4), nullable=False)
 
-    order = relationship("Order", back_populates="transactions")
+    order = relationship("Order", back_populates="transaction")

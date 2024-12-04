@@ -3,11 +3,9 @@ from typing import Optional
 from pydantic import BaseModel
 from .order_details import OrderDetail
 
-
-
 class OrderBase(BaseModel):
-    customer_name: str
-    description: Optional[str] = None
+    customer_id: int
+    order_details: list[OrderDetail] = None
 
 
 class OrderCreate(OrderBase):
@@ -15,14 +13,14 @@ class OrderCreate(OrderBase):
 
 
 class OrderUpdate(BaseModel):
-    customer_name: Optional[str] = None
-    description: Optional[str] = None
+    pass
 
 
 class Order(OrderBase):
     id: int
+    order_completed: Optional[bool] = False
     order_date: Optional[datetime] = None
-    order_details: list[OrderDetail] = None
+    
 
     class ConfigDict:
         from_attributes = True
