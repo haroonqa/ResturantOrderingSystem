@@ -81,15 +81,17 @@ def create_guest(db: Session, guest_create: customer.GuestCreate):
     suffix = 0
 
     # Ensure the name is unique by adding a number to end of it ex after guest, guest1,guest2......
-    while db.query(model.Customer).filter_by(name=guest_name).first():
-        suffix += 1
-        guest_name = f"{base_name}{suffix}"
+    # while db.query(model.Customer).filter_by(name=guest_name).first():
+    #     suffix += 1
+    #     guest_name = f"{base_name}{suffix}"
 
     # Create the guest customer with a unique name
     guest_customer = model.Customer(
         name=guest_name,  # Dynamically determined unique name
         email=guest_create.email,
         phone_number=guest_create.phone_number,
+        address=guest_create.address if guest_create.address is not None else "default_address",  # Ensure address is not null
+        password=guest_create.password if guest_create.password is not None else "default_password"  # Ensure password is not null
     )
     db.add(guest_customer)
     db.commit()
@@ -129,7 +131,7 @@ def delete_guest(db: Session, guest_id):
 
 def read_all_guests(db: Session):
     try:
-        result = db.query(model.Customer).filter(model.Customer.name.like("Guest%")).all()
+        result = db.query(model.Customer).filter(model.Customer.name.like("Guest")).all()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)

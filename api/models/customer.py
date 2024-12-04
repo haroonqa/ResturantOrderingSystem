@@ -11,13 +11,13 @@ class Customer(Base):
     __tablename__ = "customers"
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    name = Column(String(100), unique=True, nullable=False, default="Guest")
-    email = Column(String(100), unique=True, nullable=False)
+    name = Column(String(100), unique=False, nullable=False, default="Guest")
+    email = Column(String(100), unique=False, nullable=False)
     phone_number = Column(String(100), index=True, nullable=False)
-    address = Column(String(100), index=True, nullable=True)
+    address = Column(String(100), index=True, unique= False, nullable=True)
     password = Column(String(100), index=True, nullable=True)
 
-    reviews = relationship("RatingsReviews", back_populates="customer")  
+    # reviews = relationship("RatingsReviews", back_populates="customer")  
 
 
     def __init__(self, name, email, phone_number, address, password=None):
@@ -25,8 +25,7 @@ class Customer(Base):
         self.email = email
         self.phone_number = phone_number
         self.address = address
-        self.password = password
-
+        self.password = password if password is not None else "default_password"  # Provide a default value
 
     def createAccount(session,name, email, phone_number, address, password=None):
         while True:

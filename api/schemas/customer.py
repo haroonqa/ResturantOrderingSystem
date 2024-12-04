@@ -31,6 +31,8 @@ class Customer(CustomerBase):
 class GuestCreate(BaseModel):
     email: str
     phone_number: str
+    address: str = "default_address" 
+    password: str = "default_password"  # Provide a default value
 
 class GuestResponse(BaseModel):
     id: int
