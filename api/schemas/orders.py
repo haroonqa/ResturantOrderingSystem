@@ -5,8 +5,7 @@ from .order_details import OrderDetail
 
 class OrderBase(BaseModel):
     customer_id: int
-    order_details: list[OrderDetail] = None
-
+    order_completed: Optional[bool] = False
 
 class OrderCreate(OrderBase):
     pass
@@ -18,7 +17,6 @@ class OrderUpdate(BaseModel):
 
 class Order(OrderBase):
     id: int
-    order_completed: Optional[bool] = False
     order_date: Optional[datetime] = None
     
 
