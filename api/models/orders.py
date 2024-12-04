@@ -13,3 +13,4 @@ class Order(Base):
     order_completed = Column(Boolean, default=False)
     customer_id = Column(Integer, ForeignKey("customers.id"))
     order_details = relationship("OrderDetail", back_populates="order")
+    transaction = relationship("Transaction", back_populates="order")
