@@ -21,7 +21,7 @@ def read_all(db: Session = Depends(get_db)):
 
 @router.get("/{customer_id:int}", response_model=schema.CustomerCreate)
 def read_customer(customer_id: int, db: Session = Depends(get_db)):
-    return controller.read_one(customer_id, db)
+    return controller.read_one(db, customer_id)
 
 @router.put("/{customer_id}", response_model=schema.Customer)
 def update_one(customer_id: int, request: schema.CustomerUpdate, db: Session = Depends(get_db)):
