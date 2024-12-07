@@ -12,4 +12,4 @@ class Recipe(Base):
     resources_needed = Column(JSON)
 
     sandwich = relationship("Sandwich", back_populates="recipes")
-    resource = relationship("Resource", back_populates="recipes")
+    #resource = relationship("Resource", back_populates="recipes")

@@ -8,3 +8,4 @@ from .junction_tables import menu_item_ingredients
 from .ingredients import Ingredient
 from .customer import Customer
 from .ratings_reviews import RatingsReviews  
+from .promotion import Promotion  # Add this line
