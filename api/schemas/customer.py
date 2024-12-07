@@ -33,6 +33,10 @@ class GuestCreate(BaseModel):
     phone_number: str
     address: str = "default_address" 
     password: str = "default_password"  # Provide a default value
+    
+class GuestUpdate(BaseModel):
+        email: Optional[str] = None
+        phone_number: Optional[str] = None
 
 class GuestResponse(BaseModel):
     id: int
