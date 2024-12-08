@@ -11,7 +11,7 @@ class OrderCreate(OrderBase):
     pass
 
 
-class OrderUpdate(BaseModel):
+class OrderUpdate(OrderBase):
     pass
 
 

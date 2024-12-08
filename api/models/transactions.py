@@ -9,6 +9,6 @@ class Transaction(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     order_id = Column(Integer, ForeignKey("orders.id"))
     price = Column(DECIMAL(6, 2), nullable=False, server_default='0.0')
-    payment_method = Column(String(4), nullable=False)
+    payment_method = Column(String(20), nullable=False)
 
     order = relationship("Order", back_populates="transaction")

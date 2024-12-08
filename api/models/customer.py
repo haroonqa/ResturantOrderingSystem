@@ -4,8 +4,6 @@ from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from ..dependencies.database import Base
-Base = declarative_base()
-
 
 class Customer(Base):
     __tablename__ = "customers"
