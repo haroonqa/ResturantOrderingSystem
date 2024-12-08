@@ -6,25 +6,12 @@ from ..services.ingredient_tracking import check_and_update_ingredients, Insuffi
 
 
 def create(db: Session, request):
-    try:
-        for order_item in request.order_details:
-            try:
-                check_and_update_ingredients(
-                    db, 
-                    menu_item_id=order_item.menu_item_id,
-                    quantity=order_item.quantity
-                )
-            except InsufficientIngredientsError as e:
-                raise HTTPException(
-                    status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=str(e)
-                )
-        
-        new_item = Order(
-            customer_id=request.customer_id,
-            promotion_id=request.promotion_id if hasattr(request, 'promotion_id') else None
+    new_item = Order(
+        customer_id = request.customer_id,
+        order_completed = request.order_completed
         )
-        
+
+    try:
         db.add(new_item)
         db.commit()
         db.refresh(new_item)
@@ -46,45 +33,37 @@ def read_all(db: Session):
     return result
 
 
-def read_one(db: Session, item_id):
+def read_one(db: Session, order_id):
     try:
-        item = db.query(Order).filter(Order.id == item_id).first()
-        if not item:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
+        order = db.query(Order).filter(Order.id == order_id).first()
+        if not order:
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found!")
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
-    return item
+    return order
 
 
-def update(db: Session, item_id, request):
+def update(db: Session, order_id, request):
     try:
-        item = db.query(Order).filter(Order.id == item_id)
-        if not item.first():
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
-            
-        update_data = {}
-        if hasattr(request, 'customer_id'):
-            update_data['customer_id'] = request.customer_id
-        if hasattr(request, 'promotion_id'):
-            update_data['promotion_id'] = request.promotion_id
-            
-        if update_data:
-            item.update(update_data, synchronize_session=False)
-            db.commit()
-            
-        return item.first()
+        order = db.query(Order).filter(Order.id == order_id)
+        if not order.first():
+            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found!")
+        update_data = request.dict(exclude_unset=True)
+        order.update(update_data, synchronize_session=False)
+        db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+    return order.first()
 
 
-def delete(db: Session, item_id):
+def delete(db: Session, order_id):
     try:
-        item = db.query(Order).filter(Order.id == item_id)
-        if not item.first():
+        order = db.query(Order).filter(Order.id == order_id)
+        if not order.first():
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
-        item.delete(synchronize_session=False)
+        order.delete(synchronize_session=False)
         db.commit()
     except SQLAlchemyError as e:
         error = str(e.__dict__['orig'])
