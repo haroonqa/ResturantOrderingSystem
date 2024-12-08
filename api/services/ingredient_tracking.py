@@ -70,6 +70,9 @@ def restock_ingredient(db: Session, ingredient_id: int, quantity: int) -> Dict:
     """
     Restock an ingredient with the specified quantity.
     """
+    if quantity <= 0:
+        raise ValueError("Restock quantity must be positive")
+
     ingredient = db.query(Ingredient).filter(Ingredient.id == ingredient_id).first()
     if not ingredient:
         raise HTTPException(status_code=404, detail="Ingredient not found")
