@@ -167,3 +167,4 @@ cython_debug/
 api/dependencies/config.py
 
 
+.DS_Store
