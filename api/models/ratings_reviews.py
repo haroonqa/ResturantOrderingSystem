@@ -6,12 +6,12 @@ class RatingsReviews(Base):
     __tablename__ = 'ratings_reviews'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    menu_item_id = Column(Integer, ForeignKey("menu_items.id", ondelete="CASCADE"), nullable=False)
-    customer_id = Column(Integer, ForeignKey("customers.id", ondelete="CASCADE"), nullable=False)
+    menu_item_id = Column(Integer, ForeignKey("menu_items.id"), nullable=False)
+    customer_id = Column(Integer, ForeignKey("customers.id"), nullable=False)
     rating = Column(Integer, nullable=False)
     review_text = Column(String(100), nullable=True)
 
-    menu_item = relationship("MenuItem", back_populates="reviews", cascade="all, delete-orphan")
+    menu_item = relationship("MenuItem", back_populates="reviews")
     #customer = relationship("Customer", back_populates="reviews")  # Link back to Customer
 
     __table_args__ = (

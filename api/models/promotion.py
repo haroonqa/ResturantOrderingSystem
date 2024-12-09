@@ -12,4 +12,4 @@ class Promotion(Base):
     expiration_date = Column(Date, nullable=False)
     is_active = Column(Boolean, default=True, nullable=False)
 
-    orders = relationship("Order", back_populates="promotion", lazy="selectin", cascade="all, delete-orphan")
+    orders = relationship("Order", back_populates="promotion", lazy="selectin")

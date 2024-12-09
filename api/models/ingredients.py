@@ -16,7 +16,7 @@ class Ingredient(Base):
     min_threshold = Column(Integer, nullable=False, default=10)  # Add minimum threshold
     low_stock_alert = Column(Boolean, default=False)  # Track if ingredient is low
 
-    menu_items = relationship("MenuItem", secondary="menu_item_ingredients", back_populates="ingredients", cascade="all, delete-orphan")
+    menu_items = relationship("MenuItem", secondary="menu_item_ingredients", back_populates="ingredients")
 
     @validates("quantity")
     def validate_quantity(self, key, value):

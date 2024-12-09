@@ -20,8 +20,8 @@ class Recipe(Base):
     ]
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    sandwich_id = Column(Integer, ForeignKey("sandwiches.id", ondelete="CASCADE"))
+    sandwich_id = Column(Integer, ForeignKey("sandwiches.id"))
     ingredients_needed = Column(JSON, default=default_ingredient_list)
 
-    sandwich = relationship("Sandwich", back_populates="recipes", cascade="all, delete-orphan")
+    sandwich = relationship("Sandwich", back_populates="recipes")
     #resource = relationship("Resource", back_populates="recipes")
