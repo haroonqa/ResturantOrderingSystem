@@ -33,3 +33,9 @@ def update(order_id: int, request: schema.OrderUpdate, db: Session = Depends(get
 @router.delete("/{order_id}")
 def delete(order_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, order_id=order_id)
+
+
+#endpoint to get orders based on a date range
+@router.get("/date-range/input date as MM/DD/YYYY")
+def get_orders_by_date_range(start_date: str, end_date: str, db: Session = Depends(get_db)):
+        return controller.read_by_date_range(db, start_date, end_date)

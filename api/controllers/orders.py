@@ -3,6 +3,10 @@ from fastapi import HTTPException, status, Response, Depends
 from ..models.orders import Order 
 from sqlalchemy.exc import SQLAlchemyError
 from ..services.ingredient_tracking import check_and_update_ingredients, InsufficientIngredientsError
+from datetime import datetime
+from sqlalchemy import and_
+
+
 
 
 def create(db: Session, request):
@@ -69,3 +73,35 @@ def delete(db: Session, order_id):
         error = str(e.__dict__['orig'])
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+# date range function ot get the orders pplaced by date
+def read_by_date_range(db: Session, start_date: str, end_date: str):
+    try:
+        # Parse the date strings into datetime objects
+        start = datetime.strptime(start_date, '%m/%d/%Y')
+        end = datetime.strptime(end_date, '%m/%d/%Y')
+
+        # Query the database for orders within the date range
+        orders = db.query(Order).filter(
+            and_(
+                Order.order_date >= start,
+                Order.order_date <= end
+            )
+        ).all()
+
+        if not orders:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail="No orders found in the specified date range"
+            )
+    except ValueError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid date format. Please use MM/DD/YYYY."
+        )
+    except SQLAlchemyError as e:
+        error = str(e.__dict__['orig'])
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=error)
+
+    return orders
+
