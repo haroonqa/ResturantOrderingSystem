@@ -1,16 +1,17 @@
-
+from ..dependencies.database import Base, engine
 from . import (
+    customer,
+    menu_items,
+    ingredients,
     orders,
     order_details,
+    ratings_reviews,
+    staff,
+    transactions,
     recipes,
     sandwiches,
     resources,
-    menu_items,
-    ingredients,
-    ratings_reviews,
-    customer,
-    staff,
-    transactions,
+    promotion,
     menu_item_ingredients
 
     
@@ -32,4 +33,4 @@ def index():
     menu_item_ingredients.create(engine, checkfirst=True)
     transactions.Base.metadata.create_all(engine)
     staff.Base.metadata.create_all(engine)
-
+    promotion.Base.metadata.create_all(engine)

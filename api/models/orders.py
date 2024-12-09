@@ -13,4 +13,6 @@ class Order(Base):
     order_completed = Column(Boolean, default=False)
     customer_id = Column(Integer, ForeignKey("customers.id", ondelete="CASCADE"))
     order_details = relationship("OrderDetail", back_populates="order", cascade="all, delete-orphan")
-    transaction = relationship("Transaction", back_populates="order")
+    transaction = relationship("Transaction", back_populates="order", cascade="all, delete-orphan")
+    promotion_id = Column(Integer, ForeignKey("promotion.id", ondelete="CASCADE"), nullable=True)
+    promotion = relationship("Promotion", back_populates="orders", lazy="selectin", cascade="all, delete-orphan")
