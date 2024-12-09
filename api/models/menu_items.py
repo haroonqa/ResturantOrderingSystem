@@ -15,7 +15,7 @@ class MenuItem(Base):
     description = Column(String(500), nullable=True)  # Detailed description
     tags = Column(String(200), nullable=True)  # Comma-separated tags
     
-    reviews = relationship("RatingsReviews", back_populates="menu_item")
-    ingredients = relationship("Ingredient", secondary="menu_item_ingredients", back_populates="menu_items")
-    sandwich_id = Column(Integer, ForeignKey('sandwiches.id'), nullable=True)
-    sandwich = relationship("Sandwich", back_populates="menu_items")
+    reviews = relationship("RatingsReviews", back_populates="menu_item", cascade="all, delete-orphan")
+    ingredients = relationship("Ingredient", secondary="menu_item_ingredients", back_populates="menu_items", cascade="all, delete-orphan")
+    sandwich_id = Column(Integer, ForeignKey('sandwiches.id', ondelete="CASCADE"), nullable=True)
+    sandwich = relationship("Sandwich", back_populates="menu_items", cascade="all, delete-orphan")

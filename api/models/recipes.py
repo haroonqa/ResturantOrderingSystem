@@ -7,21 +7,21 @@ from ..dependencies.database import Base
 class Recipe(Base):
     __tablename__ = "recipes"
 
-    default_resource_list = [
+    default_ingredient_list = [
         {
-            "resource_id": 1,
+            "ingredient_id": 1,
             "amount" : 1
         },
         {
-            "resource_id": 2,
+            "ingredient_id": 2,
             "amount": 2
         }
     
     ]
 
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    sandwich_id = Column(Integer, ForeignKey("sandwiches.id"))
-    resources_needed = Column(JSON, default=default_resource_list)
+    sandwich_id = Column(Integer, ForeignKey("sandwiches.id", ondelete="CASCADE"))
+    ingredients_needed = Column(JSON, default=default_ingredient_list)
 
-    sandwich = relationship("Sandwich", back_populates="recipes")
+    sandwich = relationship("Sandwich", back_populates="recipes", cascade="all, delete-orphan")
     #resource = relationship("Resource", back_populates="recipes")

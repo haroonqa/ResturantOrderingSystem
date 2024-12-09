@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 from ..models.ingredients import Ingredient
-from ..schemas.ingredients import IngredientCreate, IngredientResponse
+from ..schemas.ingredients import IngredientCreate, IngredientResponse, IngredientUpdate
 
 
 def create_ingredient(db: Session, request: IngredientCreate) -> IngredientResponse:
@@ -37,14 +37,15 @@ def delete_ingredient(db: Session, ingredient_id: int):
     db.commit()
 
 
-def update_ingredient(db: Session, ingredient_id: int, request: IngredientCreate):
+def update_ingredient(db: Session, ingredient_id: int, request: IngredientUpdate):
     ingredient = db.query(Ingredient).filter(Ingredient.id == ingredient_id).first()
     if not ingredient:
         raise HTTPException(
     status_code=status.HTTP_404_NOT_FOUND,
     detail="Ingredient not found"
 )
-    for key, value in request.dict().items():
+    update_data = request.dict(exclude_unset=True)
+    for key, value in update_data.items():
         setattr(ingredient, key, value)
     db.commit()
     db.refresh(ingredient)

@@ -16,7 +16,7 @@ class OrderCreate(OrderBase):
 
 
 class OrderUpdate(OrderBase):
-    pass
+    customer_id: Optional[int]
 
 
 class Order(OrderBase):

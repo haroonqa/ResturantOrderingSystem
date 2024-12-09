@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from ..dependencies.database import get_db
-from ..schemas.ingredients import IngredientCreate, IngredientResponse
+from ..schemas.ingredients import IngredientCreate, IngredientResponse, IngredientUpdate
 from ..controllers.ingredients import (
     create_ingredient,
     get_all_ingredients,
@@ -38,5 +38,5 @@ def delete(ingredient_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{ingredient_id}", response_model=IngredientResponse)
-def update(ingredient_id: int, request: IngredientCreate, db: Session = Depends(get_db)):
+def update(ingredient_id: int, request: IngredientUpdate, db: Session = Depends(get_db)):
     return update_ingredient(db, ingredient_id, request)
