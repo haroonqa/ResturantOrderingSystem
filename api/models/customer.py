@@ -15,7 +15,7 @@ class Customer(Base):
     address = Column(String(100), index=True, unique= False, nullable=True)
     password = Column(String(100), index=True, nullable=True)
 
-    # reviews = relationship("RatingsReviews", back_populates="customer")  
+    reviews = relationship("RatingsReviews", back_populates="customer")  
 
 
     def __init__(self, name, email, phone_number, address, password=None):
@@ -83,6 +83,3 @@ class Customer(Base):
             session.commit()
             print("Guest account created successfully")
             break
-
-
-
