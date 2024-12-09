@@ -12,7 +12,7 @@ class RatingsReviews(Base):
     review_text = Column(String(100), nullable=True)
 
     menu_item = relationship("MenuItem", back_populates="reviews")
-    #customer = relationship("Customer", back_populates="reviews")  # Link back to Customer
+    customer = relationship("Customer", back_populates="reviews")  # Link back to Customer
 
     __table_args__ = (
         CheckConstraint('rating >= 1 AND rating <= 5', name='check_rating_range'),
