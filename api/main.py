@@ -7,6 +7,7 @@ from .dependencies.config import conf
 from .routers.orders import router as orders_router
 from .routers.ingredient_tracking import router as inventory_router
 from .routers.menu_search import router as menu_search_router
+from .routers.menu_analytics import router as menu_analytics_router
 
 
 
@@ -15,6 +16,7 @@ app = FastAPI()
 app.include_router(orders_router)
 app.include_router(inventory_router)
 app.include_router(menu_search_router)
+app.include_router(menu_analytics_router)
 
 origins = ["*"]
 
