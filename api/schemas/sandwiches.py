@@ -9,13 +9,11 @@ class SandwichBase(BaseModel):
 
 
 class SandwichCreate(SandwichBase):
-    pass
-
+    recipe_id: int
 
 class SandwichUpdate(BaseModel):
     sandwich_name: Optional[str] = None
     price: Optional[float] = None
-
 
 class Sandwich(SandwichBase):
     id: int

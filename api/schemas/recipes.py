@@ -1,27 +1,43 @@
-from datetime import datetime
-from typing import Optional
-from pydantic import BaseModel
-from .resources import Resource
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field
 from .sandwiches import Sandwich
 
 
-class RecipeBase(BaseModel):
+class Ingredient(BaseModel):
+    ingredient_id: int
     amount: int
 
 
-class RecipeCreate(RecipeBase):
-    sandwich_id: int
-    resource_id: int
-
-class RecipeUpdate(BaseModel):
+class RecipeBase(BaseModel):
     sandwich_id: Optional[int] = None
-    resource_id: Optional[int] = None
-    amount: Optional[int] = None
+    ingredients_needed: Optional[List[Dict[str, int]]] = Field(
+        default=[
+            {"ingredient_id": 1, "amount": 2},
+            {"ingredient_id": 2, "amount": 2},
+            {"ingredient_id": 3, "amount": 1}
+        ],
+        description="List of ingredients needed for the recipe"
+    )
+
+
+class RecipeCreate(RecipeBase):
+    pass
+
+
+class RecipeUpdate(RecipeBase):
+    sandwich_id: Optional[int] = None
+    ingredients_needed: Optional[List[Dict[str, int]]] = Field(
+        default=[
+            {"ingredient_id": 1, "amount": 2},
+            {"ingredient_id": 2, "amount": 2},
+            {"ingredient_id": 3, "amount": 1}
+        ]
+    )
+
+
 
 class Recipe(RecipeBase):
     id: int
-    sandwich: Sandwich = None
-    resource: Resource = None
 
-    class ConfigDict:
-        from_attributes = True
+    class Config:
+        orm_mode = True
