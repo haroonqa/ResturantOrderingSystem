@@ -16,3 +16,4 @@ def load_routes(app):
     app.include_router(ingredient_tracking.router)
     app.include_router(menu_analytics.router)
     app.include_router(ingredient_tracking.router)
+    

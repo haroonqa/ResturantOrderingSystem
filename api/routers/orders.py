@@ -34,8 +34,18 @@ def update(order_id: int, request: schema.OrderUpdate, db: Session = Depends(get
 def delete(order_id: int, db: Session = Depends(get_db)):
     return controller.delete(db=db, order_id=order_id)
 
+@router.get("/{order_id}/status", response_model=str)
+def get_order_status(order_id: int, db: Session = Depends(get_db)):
+    return controller.get_order_status(db=db, order_id=order_id)
 
 #endpoint to get orders based on a date range
 @router.get("/date-range/input date as MM/DD/YYYY")
 def get_orders_by_date_range(start_date: str, end_date: str, db: Session = Depends(get_db)):
         return controller.read_by_date_range(db, start_date, end_date)
+
+@router.get("/revenue-by-date/")
+def get_revenue_by_date(order_date: str, db: Session = Depends(get_db)):
+    """
+    Retrieves the total revenue for all transactions associated with orders placed on a specific date.
+    """
+    return controller.get_revenue_by_date(db, order_date)
