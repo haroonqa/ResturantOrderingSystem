@@ -12,10 +12,6 @@ from .routers.menu_search import router as menu_search_router
 
 app = FastAPI()
 
-app.include_router(orders_router)
-app.include_router(inventory_router)
-app.include_router(menu_search_router)
-
 origins = ["*"]
 
 app.add_middleware(
