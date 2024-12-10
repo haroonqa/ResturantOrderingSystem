@@ -9,6 +9,8 @@ class OrderBase(BaseModel):
     customer_id: int
     order_completed: Optional[bool] = False
     promotion_id: Optional[int] = None
+    takeout: Optional[bool] = False
+    delivery: Optional[bool] = False
 
 
 class OrderCreate(OrderBase):
